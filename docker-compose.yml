@@ -1,9 +1,33 @@
-version: "3.8"
+
 
 services:
   rabbitmq:
     image: rabbitmq:management
     container_name: rabbitmq
     ports:
-      - "5672:5672" # Puerto para las conexiones de la aplicación
-      - "15672:15672" # Puerto para la interfaz de administración web
+      - "5672:5672"       # Puerto para la aplicación
+      - "15672:15672"     # Puerto para la consola de administración
+    restart: always
+
+  alertas-microservicio:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: alertas-microservicio
+    ports:
+      - "8082:8082"       # Mapea el puerto de la aplicación
+    depends_on:
+      - rabbitmq          # Asegura que RabbitMQ se inicie antes que este microservicio
+    environment:
+      # Variables de entorno necesarias para la configuración
+      SPRING_DATASOURCE_USERNAME: ADMIN
+      SPRING_DATASOURCE_PASSWORD: Bayonetta2024
+      SPRING_DATASOURCE_URL: jdbc:oracle:thin:@j4lc1ktdgsfpgvru_high
+      TNS_ADMIN: /app/wallet # Ruta de la Oracle Wallet dentro del contenedor
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: guest
+      SPRING_RABBITMQ_PASSWORD: guest
+    volumes:
+      # Monta la Oracle Wallet para que esté disponible dentro del contenedor
+      - ./Wallet_J4LC1KTDGSFPGVRU:/app/wallet
