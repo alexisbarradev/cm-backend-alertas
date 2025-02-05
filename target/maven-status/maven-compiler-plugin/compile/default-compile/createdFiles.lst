@@ -1,0 +1,9 @@
+com\backendalertas\alertasmain\AlertasmainApplication.class
+com\backendalertas\alertasmain\config\JacksonConfig.class
+com\backendalertas\alertasmain\model\AlertaModel.class
+com\backendalertas\alertasmain\service\AlertaService.class
+com\backendalertas\alertasmain\config\RabbitMQConfig.class
+com\backendalertas\alertasmain\config\SecurityConfig.class
+com\backendalertas\alertasmain\controller\AlertaController.class
+com\backendalertas\alertasmain\repository\AlertaRepository.class
+com\backendalertas\alertasmain\service\RabbitMQSender.class
